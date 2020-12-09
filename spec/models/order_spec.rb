@@ -75,6 +75,13 @@ RSpec.describe Order, type: :model do
           @order.valid?
           expect(@order.errors.full_messages).to include('Phone number is too long (maximum is 11 characters)')
         end
+
+        it 'phone_numberが数字のみでないと登録できない' do
+          @order.phone_number = '123-4567-8901'
+          @order.valid?
+          expect(@order.errors.full_messages).to include("Phone number is invalid. Input full-width characters")
+        end
+  
       end
     end
   end

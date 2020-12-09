@@ -1,6 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
-# ↑の記述がある限り未ログインユーザーはログインページへ飛ばされる インデックスは除いてあげたい
+  before_action :authenticate_user!, only: [:index]
   before_action :set_item, only: [:index, :create]
   before_action :move_to_index_order
 
