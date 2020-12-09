@@ -1,10 +1,14 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :create]
+  before_action :authenticate_user!, only: [:create]
+# ↑の記述がある限り未ログインユーザーはログインページへ飛ばされる インデックスは除いてあげたい
   before_action :set_item, only: [:index, :create]
+  before_action :move_to_index_order
 
   def index
     @transaction = Transaction.new
-    redirect_to root_path if @item.user.id == current_user.id
+    if @item.user.id == current_user.id || @item.order !=nil #もしくは 売れている場合→ordersテーブルにレコードがある
+      redirect_to root_path
+    end
   end
 
   def create
@@ -36,4 +40,12 @@ class OrdersController < ApplicationController
   def set_item
     @item = Item.find(params[:item_id])
   end
+
+  def move_to_index_order
+    @item = Item.find(params[:item_id])
+    if @item.order.present?
+      redirect_to root_path
+    end
+  end
+
 end
