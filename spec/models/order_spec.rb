@@ -4,8 +4,7 @@ RSpec.describe Order, type: :model do
   describe '購入' do
     before do
       user = FactoryBot.create(:user)
-      item = FactoryBot.build(:item)
-      item.save
+      item = FactoryBot.create(:item)
       @order = FactoryBot.build(:transaction, item_id: item.id, user_id: user.id)
       sleep(1)
     end
@@ -76,8 +75,8 @@ RSpec.describe Order, type: :model do
           expect(@order.errors.full_messages).to include('Phone number is too long (maximum is 11 characters)')
         end
 
-        it 'phone_numberが数字のみでないと登録できない' do
-          @order.phone_number = '123-4567-8901'
+        it 'phone_numberは英語を混ぜて登録できない' do
+          @order.phone_number = '123-4567-aaaa'
           @order.valid?
           expect(@order.errors.full_messages).to include("Phone number is invalid. Input full-width characters")
         end
