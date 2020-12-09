@@ -78,9 +78,8 @@ RSpec.describe Order, type: :model do
         it 'phone_numberは英語を混ぜて登録できない' do
           @order.phone_number = '123-4567-aaaa'
           @order.valid?
-          expect(@order.errors.full_messages).to include("Phone number is invalid. Input full-width characters")
+          expect(@order.errors.full_messages).to include('Phone number is invalid. Input full-width characters')
         end
-  
       end
     end
   end

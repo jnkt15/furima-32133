@@ -5,9 +5,7 @@ class OrdersController < ApplicationController
 
   def index
     @transaction = Transaction.new
-    if @item.user.id == current_user.id || @item.order !=nil #もしくは 売れている場合→ordersテーブルにレコードがある
-      redirect_to root_path
-    end
+    redirect_to root_path if @item.user.id == current_user.id || !@item.order.nil? # もしくは 売れている場合→ordersテーブルにレコードがある
   end
 
   def create
@@ -42,9 +40,6 @@ class OrdersController < ApplicationController
 
   def move_to_index_order
     @item = Item.find(params[:item_id])
-    if @item.order.present?
-      redirect_to root_path
-    end
+    redirect_to root_path if @item.order.present?
   end
-
 end
